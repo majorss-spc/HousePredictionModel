@@ -1,6 +1,6 @@
 import streamlit as st 
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
 st.title(" House Price Prediction ")
