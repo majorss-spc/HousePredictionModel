@@ -13,7 +13,7 @@ model=LinearRegression()
 
 model.fit(X,y)
 # input=int(input("Enter the size of the house : "))
-input=st.number_input("Enter the size of the house : ")
+input=st.number_input("Enter the size of the house in sqft. : ")
 if input==0:
     st.write(f"Predicted price for {input} sqft house:Rs. 0")
 else:
