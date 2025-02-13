@@ -1,29 +1,37 @@
-import streamlit as st 
+import streamlit as st
 import numpy as np
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
-st.title(" House Price Prediction ")
-st.write("This model will Take Area and pridict the price of house ")
+st.title("House Price Prediction")
+st.write("This model will take the area and predict the price of the house.")
 
-X=np.array([0,1000,1500,2000,2500,3000]).reshape(-1,1)
-y=np.array([0,150000,200000,250000,300000,350000])
+# Sample data
+X = np.array([0, 1000, 1500, 2000, 2500, 3000]).reshape(-1, 1)
+y = np.array([0, 150000, 200000, 250000, 300000, 350000])
 
-model=LinearRegression()
+# Train the model
+model = LinearRegression()
+model.fit(X, y)
 
-model.fit(X,y)
-# input=int(input("Enter the size of the house : "))
-input=st.number_input("Enter the size of the house in sqft. : ")
-if input==0:
-    st.write(f"Predicted price for {input} sqft house:Rs. 0")
+# User input
+input_size = st.number_input("Enter the size of the house in sqft:", min_value=0)
+
+# Prediction
+if input_size == 0:
+    st.write(f"Predicted price for {input_size} sqft house: Rs. 0")
 else:
-    predicted_price=model.predict([[input]]) 
-    # print(f"Predicted price for 2200 sqft house:${predicted_price[0]:,.2f}")
-    st.write(f"Predicted price for {input} sqft house:Rs.{predicted_price[0]:,.2f}")
+    predicted_price = model.predict([[input_size]])
+    st.write(f"Predicted price for {input_size} sqft house: Rs. {predicted_price[0]:,.2f}")
 
-# plt.scatter(X,y,color="Blue",label="Actual Prices")
-# plt.plot(X,model.predict(X),color="red",label="Regression line")
-# plt.xlabel("Size(sqft)")
-# plt.ylabel("Price($)")
-# plt.legend()
-# plt.show()
+    # Plotting
+    fig, ax = plt.subplots()
+    ax.scatter(X, y, color="blue", label="Actual Prices")
+    ax.plot(X, model.predict(X), color="red", label="Regression Line")
+    ax.scatter([input_size], predicted_price, color="green", label="Predicted Price", zorder=5)
+    ax.set_xlabel("Size (sqft)")
+    ax.set_ylabel("Price (Rs.)")
+    ax.legend()
+
+    # Display the plot
+    st.pyplot(fig)
